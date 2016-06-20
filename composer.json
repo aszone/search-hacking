@@ -1,0 +1,33 @@
+{
+  "name": "aszone/search-hacking",
+  "type": "library",
+  "description": "AsZone Component - Search Hacking",
+  "keywords": ["search","dork","search hacking","hacker","php","hacking","google hacking","ghdb","bing","yandex","yahoo","dukedukego"],
+  "homepage": "http://www.lenonleite.com.br",
+  "license": "MIT",
+  "version": "0.1",
+  "authors": [
+    {
+      "name": "Lenon Leite",
+      "email": "lenonleite@gmail.com.br",
+      "homepage": "http://www.lenonleite.com.br"
+    },
+    {
+      "name": "ASZone",
+      "homepage": "https://www.aszone.com.br"
+    }
+
+  ],
+  "require": {
+    "php": ">=5.3.9",
+    "guzzlehttp/guzzle":"~5.3",
+    "symfony/dom-crawler":"~2.8",
+    "aszone/fakeheadres": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aszone\\SearchHacking\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
