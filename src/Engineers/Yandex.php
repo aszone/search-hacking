@@ -8,8 +8,8 @@
 
 namespace Aszone\Component\SearchHacking\Lib\Ghdb\Engineers;
 
-use Aszone\Component\SearchHacking\Lib\Ghdb\Utils;
-use Aszone\Component\SearchHacking\Lib\ProxiesAvenger\Proxies;
+use Aszone\SearchHacking\Utils;
+use Aszone\ProxyAvenger;
 
 class Yandex
 {
