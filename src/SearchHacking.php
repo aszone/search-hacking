@@ -1,6 +1,6 @@
 <?php
 
-namespace Aszone;
+namespace Aszone\SearchHacking;
 
 use Aszone\SearchHacking\Engineers\DukeDukeGo;
 use Aszone\SearchHacking\Engineers\GoogleApi;
