@@ -22,8 +22,8 @@
     "php": ">=5.3.9",
     "guzzlehttp/guzzle":"~5.3",
     "symfony/dom-crawler":"~2.8",
-    "aszone/fakeheadres": "dev-master",
-    "aszone/proxyavenger": "dev-master"
+    "aszone/fakeheadres": "~0.1",
+    "aszone/proxyavenger": "~0.1"
   },
   "autoload": {
     "psr-4": {
