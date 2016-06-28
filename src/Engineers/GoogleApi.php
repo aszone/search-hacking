@@ -5,7 +5,7 @@ namespace Aszone\SearchHacking\Engineers;
 use Aszone\SearchHacking\Utils;
 use GuzzleHttp\Client;
 use Aszone\ProxyAvenger;
-use Aszone\FakeHeaders;
+use Aszone\FakeHeaders\FakeHeaders;
 
 class GoogleApi
 {

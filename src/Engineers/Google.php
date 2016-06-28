@@ -3,7 +3,7 @@
 namespace Aszone\SearchHacking\Engineers;
 
 use Aszone\SearchHacking\Utils;
-use Aszone\FakeHeaders;
+use Aszone\FakeHeaders\FakeHeaders;
 use Aszone\ProxyAvenger;
 use GuzzleHttp\Client;
 
