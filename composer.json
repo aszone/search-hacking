@@ -22,7 +22,7 @@
     "php": ">=5.3.9",
     "guzzlehttp/guzzle":"~5.3",
     "symfony/dom-crawler":"~2.8",
-    "aszone/fakeheadres": "~0.1",
+    "aszone/fakeheaders": "~0.1",
     "aszone/proxyavenger": "~0.1"
   },
   "autoload": {
