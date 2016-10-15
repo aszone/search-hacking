@@ -6,55 +6,12 @@
  * Time: 01:43.
  */
 
-namespace Aszone\SearchHacking\Engineers;
+namespace Aszone\SearchHacking\Engines;
 
 use Aszone\SearchHacking\Utils;
-use Aszone\ProxyAvenger;
 
-
-class DukeDukeGo
+class DuckDuckGo extends Engine
 {
-    public $listOfVirginProxies;
-    public $usginVirginProxies;
-    public $tor;
-    public $commandData;
-    public $proxy;
-    public $error;
-    public $utils;
-    public $Proxies;
-
-    public function __construct($data)
-    {
-        $this->commandData = $data;
-        $this->utils = new Utils();
-
-        //check if set vp and initialize method Proxyvirgin of ProxyAvenger
-        if ($this->commandData['virginProxies'] or $this->commandData['proxyOfSites'] or $this->commandData['tor']) {
-            $this->Proxies = new Proxies();
-        }
-
-        if ($this->commandData['tor']) {
-            $this->proxy = $this->Proxies->getTor();
-        }
-
-        if ($this->commandData['proxyOfSites']) {
-            $this->proxy = $this->Proxies->getProxyOfSites();
-        }
-
-        $checkVirginProxiesExist = '';
-        if ($this->commandData['virginProxies']) {
-            $this->listOfVirginProxies = $this->Proxies->getVirginSiteProxies();
-            $this->usginVirginProxies = true;
-            $checkVirginProxiesExist = $this->Proxies->checkVirginProxiesExist();
-        }
-
-        $result = $this->utils->validation($this->commandData['virginProxies'], $checkVirginProxiesExist);
-
-        if ($result) {
-            $this->error = $result;
-        }
-    }
-
     public function run()
     {
         $exit = false;
@@ -90,17 +47,16 @@ class DukeDukeGo
             }
 
             $urlOfSearch = 'https://duckduckgo.com/d.js?q='.urlencode($this->commandData['dork']).'&ct=BR&ss_mkt=us&sp=1&l=wt-wt&vqd='.$numberForUrl.'&p=1&s='.$numPaginator;
-            echo 'Page '.$count."\n";
+            
+            $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
-                $body = $this->utils->getBodyByVirginProxies($urlOfSearch, $this->listOfVirginProxies[$countProxyVirgin], $this->proxy);
+                $body = Utils::getBodyByVirginProxies($urlOfSearch, $this->listOfVirginProxies[$countProxyVirgin], $this->proxy);
 
                 $arrLinks = $this->getLinks($body);
 
-
-
                 if ($this->checkReturnError($body)) {
-                    echo "You has a problem with proxy, probaly you estress the engenier ...\n";
+                    $this->output("You has a problem with proxy, probaly you stress the engenier ...\n");
                     --$count;
                     ++$countError;
                     if ($countError == 4) {
@@ -117,18 +73,21 @@ class DukeDukeGo
                     ++$countProxyVirgin;
                 }
             } else {
-                $body = $this->utils->getBody($urlOfSearch, $this->proxy);
+                $body = Utils::getBody($urlOfSearch, $this->proxy);
 
                 $arrLinks = $this->getLinks($body);
             }
 
-            echo "\n".$urlOfSearch."\n";
+            $this->output("\n".$urlOfSearch."\n");
+
             $results = $this->sanitazeLinks($arrLinks);
 
             if ((count($results) == 0 and $body != 'repeat')) {
                 $exit = true;
             }
+
             $resultFinal = array_merge($resultFinal, $results);
+            
             ++$count;
         }
 
@@ -138,8 +97,8 @@ class DukeDukeGo
     private function getNumberForUrl()
     {
         $firstUrlOfSearch = 'https://duckduckgo.com/?q='.urlencode($this->commandData['dork']).'&search_plus_one=form&ia=web';
-        $body = $this->utils->getBody($firstUrlOfSearch, $this->proxy);
-        //
+        $body = Utils::getBody($firstUrlOfSearch, $this->proxy);
+        
         $validXmlrpc = preg_match("/','.*&vqd=(.*?)&/", $body, $matches, PREG_OFFSET_CAPTURE);
 
         if (isset($matches[1][0])) {
@@ -148,10 +107,29 @@ class DukeDukeGo
 
         return false;
     }
+
+    public function sanitazeLinks($links = array())
+    {
+        $hrefs = array();
+
+        if (!empty($links)) {
+            foreach ($links as $keyLink => $valueLink) {
+                $validResultOfBlackList = Utils::checkBlacklist($valueLink);
+                if (!$validResultOfBlackList and $valueLink) {
+                    $hrefs[] = $valueLink;
+                }
+            }
+
+            $hrefs = array_unique($hrefs);
+        }
+
+        return $hrefs;
+    }
+
     public function getLinks($body)
     {
         $result = [];
-        $validXmlrpc = preg_match("/DDG\.Data\.languages\.resultLanguages', (.*?),{\"n\":\"/", $body, $matches, PREG_OFFSET_CAPTURE);
+        $validXmlrpc = preg_match("/DDG\.Data\.languages\.resultLanguages', (.*?)\);if/", $body, $matches, PREG_OFFSET_CAPTURE);
 
         if (isset($matches[1][0])) {
             $resultJson = json_decode($matches[1][0]);
@@ -165,22 +143,6 @@ class DukeDukeGo
         return $result;
     }
 
-    public function sanitazeLinks($links = array())
-    {
-        $hrefs = array();
-        if (!empty($links)) {
-            foreach ($links as $keyLink => $valueLink) {
-                $validResultOfBlackList = $this->utils->checkBlacklist($valueLink);
-                if (!$validResultOfBlackList and $valueLink) {
-                    $hrefs[] = $valueLink;
-                }
-            }
-            $hrefs = array_unique($hrefs);
-        }
-
-        return $hrefs;
-    }
-
     public function checkReturnError($body)
     {
         $valid = preg_match("/Dvar q=window\.location\.href\.indexOf/", $body, $matches, PREG_OFFSET_CAPTURE);
@@ -192,3 +154,4 @@ class DukeDukeGo
         return false;
     }
 }
+
