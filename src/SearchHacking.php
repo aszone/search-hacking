@@ -2,118 +2,28 @@
 
 namespace Aszone\SearchHacking;
 
-use Aszone\SearchHacking\Engineers\DukeDukeGo;
-use Aszone\SearchHacking\Engineers\GoogleApi;
-use Aszone\SearchHacking\Engineers\Google;
-use Aszone\SearchHacking\Engineers\Bing;
-use Aszone\SearchHacking\Engineers\Yandex;
-use Aszone\SearchHacking\Engineers\Yahoo;
+use Aszone\SearchHacking\Engines\EngineInterface;
 
 class SearchHacking
 {
-    public $dork;
+    private $engine;
 
-    public $pathProxy;
-
-    public $proxy;
-
-    public $tor;
-
-    public $proxylist;
-
-    public $countProxylist;
-
-    public $usginVirginProxies;
-
-    public $virginProxies;
-
-    public $coutnVirginProxy;
-
-    public $siteGoogle;
-
-    public $Proxies;
-
-    public $commandData;
-
-    public function __construct($commandData)
+    public function __construct(EngineInterface $engine, $proxyPath = null)
     {
-        //Check command of entered.
-        $defaultEnterData = $this->defaultEnterData();
-        $this->commandData = array_merge($defaultEnterData, $commandData);
+        $this->engine = $engine;
 
-        if (file_exists($this->pathProxy)) {
-            unlink($this->pathProxy);
+        if (file_exists($proxyPath)) {
+            unlink($this->proxyPath);
         }
     }
 
-    private function defaultEnterData()
+    public function run()
     {
-        $dataDefault['dork'] = false;
-        $dataDefault['pl'] = false;
-        $dataDefault['tor'] = false;
-        $dataDefault['virginProxies'] = false;
-        $dataDefault['proxyOfSites'] = false;
-
-        return $dataDefault;
-    }
-
-    public function runGoogle()
-    {
-        $google = new Google($this->commandData);
-        if ($google->error) {
-            return $google;
+        if ($this->engine->getError()) {
+            return $this->engine;
         }
 
-        return $google->run();
-    }
-
-    public function runGoogleApi()
-    {
-        $googleApi = new GoogleApi($this->commandData);
-        if ($googleApi->error) {
-            return $googleApi;
-        }
-
-        return $googleApi->run();
-    }
-
-    public function runBing()
-    {
-        $bing = new Bing($this->commandData);
-        if ($bing->error) {
-            return $bing;
-        }
-
-        return $bing->run();
-    }
-
-    public function runYandex()
-    {
-        $yandex = new Yandex($this->commandData);
-        if ($yandex->error) {
-            return $yandex;
-        }
-
-        return $yandex->run();
-    }
-
-    public function runYahoo()
-    {
-        $yahoo = new Yahoo($this->commandData);
-        if ($yahoo->error) {
-            return $yahoo;
-        }
-
-        return $yahoo->run();
-    }
-
-    public function runDukeDukeGo()
-    {
-        $dukedukego = new DukeDukeGo($this->commandData);
-        if ($dukedukego->error) {
-            return $dukedukego;
-        }
-
-        return $dukedukego->run();
+        return $this->engine->run();
     }
 }
+
