@@ -26,7 +26,7 @@ class Yahoo extends Engine
             }
 
             $urlOfSearch = 'https://search.yahoo.com/search?p='.urlencode($this->commandData['dork']).'&fr=yfp-t-707&pz=100&b='.$numPaginator;
-            
+
             $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
@@ -48,17 +48,16 @@ class Yahoo extends Engine
             $this->output("\n".$urlOfSearch."\n");
 
             $results = Utils::sanitazeLinks($arrLinks);
-            
+
             if ((count($results) == 0 and $body != 'repeat')) {
                 $exit = true;
             }
-            
+
             $resultFinal = array_merge($resultFinal, $results);
-            
+
             ++$count;
         }
 
         return $resultFinal;
     }
 }
-

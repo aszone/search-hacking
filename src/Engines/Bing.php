@@ -28,14 +28,13 @@ class Bing extends Engine
             }
 
             $urlOfSearch = 'http://www.bing.com/search?q='.urlencode($this->commandData['dork']).'&filt=rf&first='.$numPaginator;
-            
-            $this->output('Page ' . $count . "\n");
+
+            $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
-                
-                $this->output('*' . $countProxyVirgin . '*');
+                $this->output('*'.$countProxyVirgin.'*');
 
-                $this->output('&' . $this->listOfVirginProxies[$countProxyVirgin] . '&');
+                $this->output('&'.$this->listOfVirginProxies[$countProxyVirgin].'&');
 
                 $body = Utils::getBodyByVirginProxies($urlOfSearch, $this->listOfVirginProxies[$countProxyVirgin], $this->proxy);
 
@@ -55,10 +54,10 @@ class Bing extends Engine
                 ++$countOutProxy;
             }
 
-            $this->output("\n" . $urlOfSearch . "\n");
+            $this->output("\n".$urlOfSearch."\n");
 
             $results = Utils::sanitazeLinks($arrLinks);
-            
+
             if ((count($results) == 0 && $body != 'repeat') || ($countOutProxy == $totalOutProxy)) {
                 $exit = true;
             }
@@ -70,4 +69,3 @@ class Bing extends Engine
         return $resultFinal;
     }
 }
-

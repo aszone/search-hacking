@@ -26,4 +26,3 @@ class SearchHacking
         return $this->engine->run();
     }
 }
-

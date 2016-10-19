@@ -12,4 +12,3 @@ interface EngineInterface
 
     public function output($value);
 }
-

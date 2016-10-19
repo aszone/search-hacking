@@ -47,7 +47,7 @@ class DuckDuckGo extends Engine
             }
 
             $urlOfSearch = 'https://duckduckgo.com/d.js?q='.urlencode($this->commandData['dork']).'&ct=BR&ss_mkt=us&sp=1&l=wt-wt&vqd='.$numberForUrl.'&p=1&s='.$numPaginator;
-            
+
             $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
@@ -87,7 +87,7 @@ class DuckDuckGo extends Engine
             }
 
             $resultFinal = array_merge($resultFinal, $results);
-            
+
             ++$count;
         }
 
@@ -98,7 +98,7 @@ class DuckDuckGo extends Engine
     {
         $firstUrlOfSearch = 'https://duckduckgo.com/?q='.urlencode($this->commandData['dork']).'&search_plus_one=form&ia=web';
         $body = Utils::getBody($firstUrlOfSearch, $this->proxy);
-        
+
         $validXmlrpc = preg_match("/','.*&vqd=(.*?)&/", $body, $matches, PREG_OFFSET_CAPTURE);
 
         if (isset($matches[1][0])) {
@@ -154,4 +154,3 @@ class DuckDuckGo extends Engine
         return false;
     }
 }
-

@@ -28,7 +28,7 @@ class Yandex extends Engine
             }
 
             $urlOfSearch = 'https://yandex.ru/search/?text='.urlencode($this->commandData['dork']).'&p='.$numPaginator.'&lr=10136';
-            
+
             $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
@@ -67,7 +67,7 @@ class Yandex extends Engine
             }
 
             $resultFinal = array_merge($resultFinal, $results);
-            
+
             ++$count;
         }
 
@@ -79,4 +79,3 @@ class Yandex extends Engine
         return preg_match("/https:\/\/yandex.ru\/showcaptcha\?/", $body, $matches, PREG_OFFSET_CAPTURE);
     }
 }
-
