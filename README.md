@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/aszone/search-hacking.svg?branch=master)](https://travis-ci.org/aszone/search-hacking)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aszone/search-hacking/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aszone/search-hacking/?branch=master)
+
 # Search Hacking
 
 > Search Hacking is a collection of libraries for search results based in dork
