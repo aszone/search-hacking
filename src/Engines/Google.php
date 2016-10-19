@@ -12,7 +12,7 @@ class Google extends Engine
 
     private function loadGoogleSite()
     {
-        $ini_google_sites = parse_ini_file(__DIR__ . '/../../resources/AllGoogleSites.ini');
+        $ini_google_sites = parse_ini_file(__DIR__.'/../../resources/AllGoogleSites.ini');
         $this->siteGoogle = $ini_google_sites[array_rand($ini_google_sites)];
     }
 
@@ -34,7 +34,7 @@ class Google extends Engine
             }
 
             $urlOfSearch = 'https://'.$this->siteGoogle.'/search?q='.urlencode($this->commandData['dork']).'&num=100&btnG=Search&pws=1'.$paginator;
-            
+
             $this->output('Page '.$count."\n");
 
             if ($this->commandData['virginProxies']) {
@@ -73,7 +73,7 @@ class Google extends Engine
             }
 
             $resultFinal = array_merge($resultFinal, $results);
-            
+
             ++$count;
         }
 
@@ -111,4 +111,3 @@ class Google extends Engine
         return preg_match('/CaptchaRedirect/', $body, $matches, PREG_OFFSET_CAPTURE);
     }
 }
-

@@ -13,7 +13,7 @@ class SearchHackingTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->engine   = $this->createMock(EngineInterface::class);
+        $this->engine = $this->createMock(EngineInterface::class);
         $this->instance = new SearchHacking($this->engine);
     }
 
@@ -27,4 +27,3 @@ class SearchHackingTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 }
-

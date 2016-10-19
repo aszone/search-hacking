@@ -2,9 +2,6 @@
 
 namespace Aszone\SearchHacking\Engines;
 
-use Aszone\SearchHacking\Utils;
-use Aszone\ProxyAvenger;
-
 abstract class Engine implements EngineInterface
 {
     protected $error;
@@ -20,7 +17,7 @@ abstract class Engine implements EngineInterface
         'pl' => false,
         'tor' => false,
         'virginProxies' => false,
-        'proxyOfSites' => false
+        'proxyOfSites' => false,
     ];
 
     public function __construct(array $data)
@@ -44,7 +41,7 @@ abstract class Engine implements EngineInterface
             $this->usingVirginProxies = true;
         }
     }
-    
+
     public function validate()
     {
         if ($this->commandData['virginProxies'] && !$this->proxies->checkVirginProxiesExist()) {
@@ -61,9 +58,9 @@ abstract class Engine implements EngineInterface
 
     public function hasProxy()
     {
-        return ($this->commandData['virginProxies'] 
-                || $this->commandData['proxyOfSites'] 
-                || $this->commandData['tor']);
+        return $this->commandData['virginProxies']
+                || $this->commandData['proxyOfSites']
+                || $this->commandData['tor'];
     }
 
     public function getError()
@@ -77,6 +74,6 @@ abstract class Engine implements EngineInterface
     }
 
     public function run()
-    {}
+    {
+    }
 }
-

@@ -17,12 +17,12 @@ class Utils
     public static function sanitazeLinks($links = array())
     {
         $hrefs = array();
-        
+
         if (!empty($links)) {
             foreach ($links as $keyLink => $valueLink) {
                 $url = static::clearLink($valueLink->getAttribute('href'));
                 $validResultOfBlackList = static::checkBlacklist($url);
-                
+
                 if (!$validResultOfBlackList and $url) {
                     $hrefs[] = $url;
                 }
@@ -44,7 +44,7 @@ class Utils
                 $url = $matches[2][0];
             }
 
-            $ini_blakclist = parse_ini_file(__DIR__ . '/../resources/Blacklist.ini');
+            $ini_blakclist = parse_ini_file(__DIR__.'/../resources/Blacklist.ini');
 
             $key = array_search($url, $ini_blakclist);
 
@@ -60,32 +60,32 @@ class Utils
     {
         if (!empty($url)) {
             $validXmlrpc = preg_match('/search%3Fq%3Dcache:.+?:(.+?)%252B/', $url, $matches, PREG_OFFSET_CAPTURE);
-            
+
             if (isset($matches[1][0])) {
                 return $matches[1][0];
             }
 
             $validXmlrpc = preg_match("/search\?q=cache:.+?:(.+?)\+/", $url, $matches, PREG_OFFSET_CAPTURE);
-            
+
             if (isset($matches[1][0])) {
                 return $matches[1][0];
             }
 
             $validXmlrpc = preg_match('/url=(.*?)&tld/', $url, $matches, PREG_OFFSET_CAPTURE);
-            
+
             if (isset($matches[1][0])) {
                 return urldecode($matches[1][0]);
             }
 
             //Msn Bing
             $validXmlrpc = preg_match("/^((http|https):\/\/|www).+?\/?ld=.+?\&u=(.+?)\n/", $url, $matches, PREG_OFFSET_CAPTURE);
-            
+
             if (isset($matches[1][0])) {
                 return urldecode($matches[1][0]);
             }
 
             $validXmlrpc = preg_match("/^((http|https):\/\/|www)(.+?)\//", $url, $matches, PREG_OFFSET_CAPTURE);
-            
+
             if (isset($matches[0][0])) {
                 $check[] = strpos($url, 'www.blogger.com');
                 $check[] = strpos($url, 'youtube.com');
@@ -132,11 +132,11 @@ class Utils
                     'timeout' => 60,
                 ],
             ]);
-            
+
             return $client->get($urlOfSearch)->getBody()->getContents();
         } catch (\Exception $e) {
             $message = 'ERROR : '.$e->getMessage()."\n";
-            
+
             if ($proxy == false) {
                 $message .= "Your ip is blocked, we are using proxy at now...\n";
             }
@@ -184,4 +184,3 @@ class Utils
         return $body;
     }
 }
-

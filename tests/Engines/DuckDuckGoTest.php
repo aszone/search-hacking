@@ -28,9 +28,8 @@ class DuckDuckGoTest extends \PHPUnit_Framework_TestCase
 
     private function hasArrayOfLinks($links)
     {
-        return (bool) array_filter($links, function($link) {
+        return (bool) array_filter($links, function ($link) {
             return strpos($link, 'http') === 0;
         });
     }
 }
-
