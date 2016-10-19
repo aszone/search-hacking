@@ -5,7 +5,6 @@
   "keywords": ["search","dork","search hacking","hacker","php","hacking","google hacking","ghdb","bing","yandex","yahoo","dukedukego"],
   "homepage": "http://www.lenonleite.com.br",
   "license": "MIT",
-  "version": "0.1",
   "authors": [
     {
       "name": "Lenon Leite",
@@ -19,7 +18,7 @@
 
   ],
   "require": {
-    "php": ">=5.5",
+    "php": ">=5.6",
     "guzzlehttp/guzzle":"~5.3",
     "symfony/dom-crawler":"~2.8",
     "symfony/css-selector":"2.8",
